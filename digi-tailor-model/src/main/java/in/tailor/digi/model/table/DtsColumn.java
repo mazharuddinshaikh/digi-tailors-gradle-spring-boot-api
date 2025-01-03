@@ -46,7 +46,11 @@ public abstract class DtsColumn {
 	public static final String UDT_ID = "UDT_ID";
 	public static final String DRESS_TYPE_ID = "DRESS_TYPE_ID";
 	public static final String DRESS_ID = "DRESS_ID";
-
+	public static final String HOLIDAY = "HOLIDAY";
+	public static final String OPEN_TIME = "OPEN_TIME";
+	public static final String CLOSE_TIME = "CLOSE_TIME";
+	public static final String SHOP_STATUS = "SHOP_STATUS";
+	public static final String SHOP_IMAGE = "SHOP_IMAGE";
 	private DtsColumn() {
 	}
 }

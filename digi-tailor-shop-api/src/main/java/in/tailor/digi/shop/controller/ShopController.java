@@ -43,9 +43,8 @@ public class ShopController {
             return ResponseEntity.ok(DtsApiResponse.<List<Shop>>builder().httpStatus(HttpStatus.OK.value())
                     .message("shop list Found").result(shopList).build());
         }
-        throw new DtsException(DtsApiResponse.<String>builder().message("no shop found")
-                .httpStatus(HttpStatus.OK.value()).build());
-
+        throw new DtsException(DtsApiResponse.<String>builder()
+                .httpStatus(HttpStatus.NO_CONTENT.value()).build());
     }
 
     @GetMapping("/v1/{userId}/{offset}/{limit}")
@@ -57,9 +56,16 @@ public class ShopController {
             return ResponseEntity.ok(DtsApiResponse.<List<Shop>>builder().httpStatus(HttpStatus.OK.value())
                     .message("shop list Found").result(shopList).build());
         }
-        throw new DtsException(DtsApiResponse.<String>builder().message("no shop found")
-                .httpStatus(HttpStatus.OK.value()).build());
+        throw new DtsException(DtsApiResponse.<String>builder()
+                .httpStatus(HttpStatus.NO_CONTENT.value()).build());
 
+    }
+
+    @GetMapping("/v1/{shopId}")
+    @Operation(summary = "Get shop by shop id")
+    public ResponseEntity<Shop> getShopBySopId(@PathVariable("shopId") String shopId) throws DtsException {
+        return ResponseEntity.ok().body(shopService.getShopByShopId(shopId).orElseThrow(() -> new DtsException(DtsApiResponse.<String>builder()
+                .httpStatus(HttpStatus.NO_CONTENT.value()).build())));
     }
 
     @PostMapping("/v1")
@@ -72,7 +78,6 @@ public class ShopController {
         }
         throw new DtsException(DtsApiResponse.<String>builder().httpStatus(HttpStatus.FORBIDDEN.value())
                 .message("Shop not added. Please retry").build());
-
     }
 
     @PutMapping("/v1")

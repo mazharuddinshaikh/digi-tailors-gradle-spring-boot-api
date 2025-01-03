@@ -3,7 +3,7 @@ package in.tailor.digi.model.table;
 import static in.tailor.digi.model.table.DtsColumn.*;
 
 public enum DtsTable {
-    DTS_SHOP("DTS_SHOP", new String[]{SHOP_ID, SHOP_NAME, SHOP_CODE, CREATED_AT, UPDATED_AT, ADDRESS_ID}),
+    DTS_SHOP("DTS_SHOP", new String[]{SHOP_ID, SHOP_NAME, SHOP_CODE, CREATED_AT, UPDATED_AT, ADDRESS_ID, HOLIDAY, OPEN_TIME, CLOSE_TIME, SHOP_STATUS, SHOP_IMAGE}),
     DTS_ADDRESS("DTS_ADDRESS",
             new String[]{ADDRESS_ID, ADDRESS_LINE_ONE, ADDRESS_LINE_TWO, CITY, STATE, ZIPCODE, CREATED_AT, UPDATED_AT,
                     UPDATED_BY}),
