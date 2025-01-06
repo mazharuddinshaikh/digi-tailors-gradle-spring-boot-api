@@ -36,12 +36,11 @@ public class ShopController {
 
     @GetMapping("/v1/{offset}/{limit}")
     @Operation(summary = "Get shop list")
-    public ResponseEntity<DtsApiResponse<List<Shop>>> getShopList(@PathVariable("offset") Integer offset,
-                                                                  @PathVariable("limit") Integer limit) throws DtsException {
+    public ResponseEntity<List<Shop>> getShopList(@PathVariable("offset") Integer offset,
+                                                  @PathVariable("limit") Integer limit) throws DtsException {
         final var shopList = shopService.getAllShopList(offset, limit);
         if (!CollectionUtils.isEmpty(shopList)) {
-            return ResponseEntity.ok(DtsApiResponse.<List<Shop>>builder().httpStatus(HttpStatus.OK.value())
-                    .message("shop list Found").result(shopList).build());
+            return ResponseEntity.ok(shopList);
         }
         throw new DtsException(DtsApiResponse.<String>builder()
                 .httpStatus(HttpStatus.NO_CONTENT.value()).build());
@@ -49,16 +48,14 @@ public class ShopController {
 
     @GetMapping("/v1/{userId}/{offset}/{limit}")
     @Operation(summary = "Get shop list by user")
-    public ResponseEntity<DtsApiResponse<List<Shop>>> getShopListByUser(@PathVariable("userId") String userId,
-                                                                        @PathVariable("offset") Integer offset, @PathVariable("limit") Integer limit) throws DtsException {
+    public ResponseEntity<List<Shop>> getShopListByUser(@PathVariable("userId") String userId,
+                                                        @PathVariable("offset") Integer offset, @PathVariable("limit") Integer limit) throws DtsException {
         final var shopList = shopService.getShopListByUser(userId, offset, limit);
         if (!CollectionUtils.isEmpty(shopList)) {
-            return ResponseEntity.ok(DtsApiResponse.<List<Shop>>builder().httpStatus(HttpStatus.OK.value())
-                    .message("shop list Found").result(shopList).build());
+            return ResponseEntity.ok(shopList);
         }
         throw new DtsException(DtsApiResponse.<String>builder()
                 .httpStatus(HttpStatus.NO_CONTENT.value()).build());
-
     }
 
     @GetMapping("/v1/{shopId}")
