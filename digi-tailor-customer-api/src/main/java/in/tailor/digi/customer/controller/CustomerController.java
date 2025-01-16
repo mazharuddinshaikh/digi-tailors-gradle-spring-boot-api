@@ -42,8 +42,8 @@ public class CustomerController {
         if (!CollectionUtils.isEmpty(customerList)) {
             return ResponseEntity.ok(customerList);
         }
-        throw new DtsException(DtsApiResponse.<String>builder().message("no customer found")
-                .httpStatus(HttpStatus.FORBIDDEN.value()).build());
+        throw new DtsException(DtsApiResponse.<String>builder()
+                .httpStatus(HttpStatus.NO_CONTENT.value()).build());
 
     }
 
@@ -55,8 +55,8 @@ public class CustomerController {
         if (!CollectionUtils.isEmpty(customerList)) {
             return ResponseEntity.ok(customerList);
         }
-        throw new DtsException(DtsApiResponse.<String>builder().message("no customer found")
-                .httpStatus(HttpStatus.FORBIDDEN.value()).build());
+        throw new DtsException(DtsApiResponse.<String>builder()
+                .httpStatus(HttpStatus.NO_CONTENT.value()).build());
     }
 
     @PostMapping("/v1")

@@ -6,6 +6,7 @@ import in.tailor.digi.model.User;
 import in.tailor.digi.model.table.DtsColumn;
 import in.tailor.digi.utils.DtsUtils;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -31,15 +32,17 @@ public non-sealed class CustomerRepositoryImpl implements CustomerRepository {
         return jdbcTemplate.query(query, new RowMapper<Customer>() {
             @Override
             public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return Customer.builder().customerId(rs.getString(DtsColumn.CUSTOMER_ID))
+                var customerBuilder = Customer.builder().customerId(rs.getString(DtsColumn.CUSTOMER_ID))
                         .firstName(rs.getString(DtsColumn.FIRST_NAME)).middleName(rs.getString(DtsColumn.MIDDLE_NAME))
                         .lastName(rs.getString(DtsColumn.LAST_NAME)).mobileNo(rs.getString(DtsColumn.MOBILE_NO))
                         .email(rs.getString(DtsColumn.EMAIL))
                         .createdAt(rs.getObject(DtsColumn.CREATED_AT, LocalDateTime.class))
                         .updatedAt(rs.getObject(DtsColumn.UPDATED_AT, LocalDateTime.class))
-                        .user(User.builder().userId(rs.getString(DtsColumn.USER_ID)).build())
-                        .shop(Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID)).build())
-                        .build();
+                        .user(User.builder().userId(rs.getString(DtsColumn.USER_ID)).build());
+                if (StringUtils.isNotEmpty(rs.getString(DtsColumn.SHOP_ID))) {
+                    customerBuilder.shop(Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID)).build());
+                }
+                return customerBuilder.build();
             }
         }, userId, limit, offset);
     }
@@ -52,15 +55,17 @@ public non-sealed class CustomerRepositoryImpl implements CustomerRepository {
         return jdbcTemplate.query(query, new RowMapper<Customer>() {
             @Override
             public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return Customer.builder().customerId(rs.getString(DtsColumn.CUSTOMER_ID))
+                var customerBuilder = Customer.builder().customerId(rs.getString(DtsColumn.CUSTOMER_ID))
                         .firstName(rs.getString(DtsColumn.FIRST_NAME)).middleName(rs.getString(DtsColumn.MIDDLE_NAME))
                         .lastName(rs.getString(DtsColumn.LAST_NAME)).mobileNo(rs.getString(DtsColumn.MOBILE_NO))
                         .email(rs.getString(DtsColumn.EMAIL))
                         .createdAt(rs.getObject(DtsColumn.CREATED_AT, LocalDateTime.class))
                         .updatedAt(rs.getObject(DtsColumn.UPDATED_AT, LocalDateTime.class))
-                        .user(User.builder().userId(rs.getString(DtsColumn.USER_ID)).build())
-                        .shop(Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID)).build())
-                        .build();
+                        .user(User.builder().userId(rs.getString(DtsColumn.USER_ID)).build());
+                if (StringUtils.isNotEmpty(rs.getString(DtsColumn.SHOP_ID))) {
+                    customerBuilder.shop(Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID)).build());
+                }
+                return customerBuilder.build();
             }
         }, shopId, limit, offset);
     }

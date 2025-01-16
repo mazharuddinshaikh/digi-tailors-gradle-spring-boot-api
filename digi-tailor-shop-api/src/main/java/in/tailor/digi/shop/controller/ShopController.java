@@ -66,7 +66,7 @@ public class ShopController {
     }
 
     @PostMapping("/v1")
-    @Operation(summary = "Add shop")
+    @Operation(summary = "Add shop") //open and close time format should always HH:mm:ss (24-hour format)
     public ResponseEntity<DtsApiResponse<Shop>> addShop(@RequestBody Shop shop) throws DtsException {
         final var optionalShop = shopService.addShop(shop);
         if (optionalShop.isPresent()) {

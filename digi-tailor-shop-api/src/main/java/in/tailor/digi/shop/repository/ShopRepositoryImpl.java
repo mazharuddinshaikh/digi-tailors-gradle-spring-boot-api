@@ -39,7 +39,7 @@ public non-sealed class ShopRepositoryImpl implements ShopRepository {
         List<Shop> shopList = jdbcTemplate.query(query, new RowMapper<Shop>() {
             @Override
             public Shop mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID))
+                Shop.ShopBuilder shopBuilder = Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID))
                         .shopName(rs.getString(DtsColumn.SHOP_NAME)).shopCode(rs.getString(DtsColumn.SHOP_CODE))
                         .shopImage(rs.getString(DtsColumn.SHOP_IMAGE))
                         .mobileNo(rs.getString(DtsColumn.MOBILE_NO))
@@ -47,12 +47,14 @@ public non-sealed class ShopRepositoryImpl implements ShopRepository {
                         .shopStatus(rs.getString(DtsColumn.SHOP_STATUS))
                         .openTime(rs.getObject(DtsColumn.OPEN_TIME, LocalTime.class))
                         .closeTime(rs.getObject(DtsColumn.CLOSE_TIME, LocalTime.class))
-                        .holiday(rs.getString(DtsColumn.HOLIDAY))
-                        .shopAddress(Address.builder().addressId(rs.getString(DtsColumn.ADDRESS_ID)).addressLineOne(rs.getString(DtsColumn.ADDRESS_LINE_ONE))
-                                .addressLineTwo(rs.getString(DtsColumn.ADDRESS_LINE_TWO))
-                                .city(rs.getString(DtsColumn.CITY)).state(rs.getString(DtsColumn.STATE))
-                                .zipCode(rs.getString(DtsColumn.ZIPCODE)).build())
-                        .build();
+                        .holiday(rs.getString(DtsColumn.HOLIDAY));
+                if (Objects.nonNull(rs.getString(DtsColumn.ADDRESS_ID))) {
+                    shopBuilder.shopAddress(Address.builder().addressId(rs.getString(DtsColumn.ADDRESS_ID)).addressLineOne(rs.getString(DtsColumn.ADDRESS_LINE_ONE))
+                            .addressLineTwo(rs.getString(DtsColumn.ADDRESS_LINE_TWO))
+                            .city(rs.getString(DtsColumn.CITY)).state(rs.getString(DtsColumn.STATE))
+                            .zipCode(rs.getString(DtsColumn.ZIPCODE)).build());
+                }
+                return shopBuilder.build();
             }
         }, shopId);
         if (!CollectionUtils.isEmpty(shopList)) {
@@ -63,7 +65,7 @@ public non-sealed class ShopRepositoryImpl implements ShopRepository {
 
     @Override
     public List<Shop> getShopList(int offset, int limit) {
-        final String query = "SELECT DTS_SHOP.SHOP_ID, DTS_SHOP.SHOP_NAME, DTS_SHOP.SHOP_CODE, DTS_SHOP.CREATED_AT, DTS_SHOP.UPDATED_AT, DTS_ADDRESS.ADD_LINE_ONE, "
+        final String query = "SELECT DTS_SHOP.SHOP_ID, DTS_SHOP.SHOP_NAME, DTS_SHOP.SHOP_CODE, DTS_SHOP.CREATED_AT, DTS_SHOP.UPDATED_AT, DTS_ADDRESS.ADDRESS_ID, DTS_ADDRESS.ADD_LINE_ONE, "
                 + "DTS_ADDRESS.ADD_LINE_TWO, DTS_ADDRESS.CITY, DTS_ADDRESS.STATE, DTS_ADDRESS.ZIPCODE, DTS_USER.USER_ID FROM DTS_SHOP DTS_SHOP "
                 + "LEFT JOIN DTS_USER_SHOP_MAPPING DTS_USER_SHOP_MAPPING ON DTS_SHOP.SHOP_ID = DTS_USER_SHOP_MAPPING.SHOP_ID "
                 + "LEFT JOIN DTS_USER DTS_USER ON DTS_USER.USER_ID = DTS_USER_SHOP_MAPPING.USER_ID "
@@ -71,15 +73,18 @@ public non-sealed class ShopRepositoryImpl implements ShopRepository {
         return jdbcTemplate.query(query, new RowMapper<Shop>() {
             @Override
             public Shop mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID))
+                Shop.ShopBuilder shopBuilder = Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID))
                         .shopName(rs.getString(DtsColumn.SHOP_NAME)).shopCode(rs.getString(DtsColumn.SHOP_CODE))
                         .createdAt(rs.getObject(DtsColumn.CREATED_AT, LocalDateTime.class))
-                        .updatedAt(rs.getObject(DtsColumn.UPDATED_AT, LocalDateTime.class))
-                        .shopAddress(Address.builder().addressLineOne(rs.getString(DtsColumn.ADDRESS_LINE_ONE))
-                                .addressLineTwo(rs.getString(DtsColumn.ADDRESS_LINE_TWO))
-                                .city(rs.getString(DtsColumn.CITY)).state(rs.getString(DtsColumn.STATE))
-                                .zipCode(rs.getString(DtsColumn.ZIPCODE)).build())
-                        .shopOwner(User.builder().userId(rs.getString(DtsColumn.USER_ID)).build()).build();
+                        .updatedAt(rs.getObject(DtsColumn.UPDATED_AT, LocalDateTime.class));
+                if (Objects.nonNull(rs.getString(DtsColumn.ADDRESS_ID))) {
+                    shopBuilder.shopAddress(Address.builder().addressId(rs.getString(DtsColumn.ADDRESS_ID)).addressLineOne(rs.getString(DtsColumn.ADDRESS_LINE_ONE))
+                            .addressLineTwo(rs.getString(DtsColumn.ADDRESS_LINE_TWO))
+                            .city(rs.getString(DtsColumn.CITY)).state(rs.getString(DtsColumn.STATE))
+                            .zipCode(rs.getString(DtsColumn.ZIPCODE)).build());
+                }
+                shopBuilder.shopOwner(User.builder().userId(rs.getString(DtsColumn.USER_ID)).build()).build();
+                return shopBuilder.build();
 
             }
         }, limit, offset);
@@ -96,25 +101,31 @@ public non-sealed class ShopRepositoryImpl implements ShopRepository {
         return jdbcTemplate.query(query, new RowMapper<Shop>() {
             @Override
             public Shop mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID))
+                Shop.ShopBuilder shopBuilder = Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID))
                         .shopName(rs.getString(DtsColumn.SHOP_NAME)).shopCode(rs.getString(DtsColumn.SHOP_CODE))
-                        .shopImage(rs.getString(DtsColumn.SHOP_IMAGE)).shopStatus(rs.getString(DtsColumn.SHOP_STATUS))
-                        .shopAddress(Address.builder().addressId(rs.getString(DtsColumn.ADDRESS_ID))
-                                .addressLineOne(rs.getString(DtsColumn.ADDRESS_LINE_ONE))
-                                .addressLineTwo(rs.getString(DtsColumn.ADDRESS_LINE_TWO))
-                                .city(rs.getString(DtsColumn.CITY)).state(rs.getString(DtsColumn.STATE))
-                                .zipCode(rs.getString(DtsColumn.ZIPCODE)).build())
-                        .build();
+                        .shopImage(rs.getString(DtsColumn.SHOP_IMAGE)).shopStatus(rs.getString(DtsColumn.SHOP_STATUS));
+                if (Objects.nonNull(rs.getString(DtsColumn.ADDRESS_ID))) {
+                    shopBuilder.shopAddress(Address.builder().addressId(rs.getString(DtsColumn.ADDRESS_ID)).addressLineOne(rs.getString(DtsColumn.ADDRESS_LINE_ONE))
+                            .addressLineTwo(rs.getString(DtsColumn.ADDRESS_LINE_TWO))
+                            .city(rs.getString(DtsColumn.CITY)).state(rs.getString(DtsColumn.STATE))
+                            .zipCode(rs.getString(DtsColumn.ZIPCODE)).build());
+                }
+                return shopBuilder.build();
             }
         }, userId, limit, offset);
     }
 
     @Override
     public int addShop(Shop shop) {
+        final String sql = "INSERT INTO DTS_SHOP (SHOP_ID, SHOP_NAME, SHOP_CODE, CREATED_AT, UPDATED_AT, ADDRESS_ID, HOLIDAY, " +
+                "OPEN_TIME, CLOSE_TIME, SHOP_STATUS, MOBILE_NO, ALTERNATE_MOBILE_NO, SHOP_IMAGE) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(
-                "INSERT INTO DTS_SHOP (SHOP_ID, SHOP_NAME, SHOP_CODE, CREATED_AT, UPDATED_AT, ADDRESS_ID) VALUES (?, ?, ?, ?, ?, ?)",
+                sql,
                 shop.getShopId(), shop.getShopName(), shop.getShopCode(), DtsUtils.getIndianCurrentDateTime(), null,
-                Objects.nonNull(shop.getShopAddress()) ? shop.getShopAddress().getAddressId() : null);
+                Objects.nonNull(shop.getShopAddress()) ? shop.getShopAddress().getAddressId() : null, shop.getHoliday(),
+                shop.getOpenTime(), shop.getCloseTime(), shop.getShopStatus(), shop.getMobileNo(), shop.getAlternateMobileNo(),
+                shop.getShopImage());
     }
 
     @Override
