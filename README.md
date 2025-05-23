@@ -64,8 +64,18 @@ VM args:
    -DPRIMARY_DATABASE_USERNAME=
    -DPRIMARY_DATABASE_PASSWORD=
 
+10. digi-tailor main api
+    -DPORT=8030
+    -DAPPLICATION_NAME=digi-tailor-main-api
+    -DLOG_FILE_NAME=digi-tailor-main-api
+    -DEUREKA_SERVER=http://localhost:8010/eureka/
+    -DPRIMARY_DATABASE_URL=jdbc:mysql://localhost:3306/demo_tailor_shop
+    -DPRIMARY_DATABASE_USERNAME=root
+    -DPRIMARY_DATABASE_PASSWORD=mazhar
+
 swagger urls:
 1. digi-tailor-shop-api: http://localhost:8026/swagger-ui/index.html
 2. digi-tailor-user-api: http://localhost:8020/swagger-ui/index.html
 3. digi-tailor-customer-api: http://localhost:8022/swagger-ui/index.html
 4. digi-tailor-dress-api: http://localhost:8023/swagger-ui/index.html
+5. digi-tailor-main-api: http://localhost:8030/swagger-ui/index.html
