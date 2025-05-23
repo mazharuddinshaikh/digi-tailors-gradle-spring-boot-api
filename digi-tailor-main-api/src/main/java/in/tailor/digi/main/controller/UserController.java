@@ -36,9 +36,8 @@ public class UserController {
 
     @Operation(summary = "Login")
     @PostMapping(value = "v1/signIn")
-    public ResponseEntity<User> signIn(@RequestParam("userName") String userName,
-                                       @RequestParam("password") String password) throws DtsException {
-        return ResponseEntity.ok().body(userService.signIn(userName, password).orElseThrow(() -> new DtsException(DtsApiResponse.<String>builder().message("Username / Password incorrect")
+    public ResponseEntity<User> signIn(@RequestBody User user) throws DtsException {
+        return ResponseEntity.ok().body(userService.signIn(user.getUserName(), user.getPassword()).orElseThrow(() -> new DtsException(DtsApiResponse.<String>builder().message("Username / Password incorrect")
                 .httpStatus(HttpStatus.FORBIDDEN.value()).build())));
     }
 

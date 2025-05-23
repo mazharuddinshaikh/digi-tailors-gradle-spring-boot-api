@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
-import in.tailor.digi.utils.DtsUtils;
 
 public class DynamicQueryGenerator {
 	public static final String NUMBER = "NUMBER";
