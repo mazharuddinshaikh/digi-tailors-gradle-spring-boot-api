@@ -10,7 +10,7 @@ VM args:
    -DAPPLICATION_NAME=digi-tailor-eureka-server
    -DLOG_FILE_NAME=digi-tailor-eureka-server
 
-3.digi-tailor main api
+3. digi-tailor main api
     -DPORT=8030
     -DAPPLICATION_NAME=digi-tailor-main-api
     -DLOG_FILE_NAME=digi-tailor-main-api
