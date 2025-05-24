@@ -1,7 +1,12 @@
 package in.tailor.digi.model.table;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import static in.tailor.digi.model.table.DtsColumn.*;
 
+@Getter
+@RequiredArgsConstructor
 public enum DtsTable {
     DTS_SHOP("DTS_SHOP", new String[]{SHOP_ID, SHOP_NAME, SHOP_CODE, CREATED_AT, UPDATED_AT, ADDRESS_ID, HOLIDAY, OPEN_TIME, CLOSE_TIME, SHOP_STATUS, SHOP_IMAGE}),
     DTS_ADDRESS("DTS_ADDRESS",
@@ -23,18 +28,4 @@ public enum DtsTable {
 
     private final String tableName;
     private final String[] columns;
-
-    DtsTable(String tableName, String[] columns) {
-        this.tableName = tableName;
-        this.columns = columns;
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public String[] getColumns() {
-        return columns;
-    }
-
 }
