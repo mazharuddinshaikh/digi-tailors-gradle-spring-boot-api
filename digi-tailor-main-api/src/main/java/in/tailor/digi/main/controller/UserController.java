@@ -68,14 +68,13 @@ public class UserController {
 
     @Operation(summary = "Update password")
     @PutMapping(value = "v1/updatePassword")
-    public ResponseEntity<String> updatePassword(@RequestParam("userId") String userId,
-                                                 @RequestParam("password") String password) throws DtsException {
-        final var validationMessage = userValidationService.validatePassword(password);
+    public ResponseEntity<String> updatePassword(@RequestBody User user) throws DtsException {
+        final var validationMessage = userValidationService.validatePassword(user.getPassword());
         if (!ObjectUtils.isEmpty(validationMessage)) {
             throw new DtsException(DtsApiResponse.<String>builder().message(validationMessage)
                     .httpStatus(HttpStatus.NO_CONTENT.value()).build());
         }
-        final int passwordUpdated = userService.updatePassword(userId, password);
+        final int passwordUpdated = userService.updatePassword(user.getUserId(), user.getPassword());
         if (passwordUpdated > 0) {
             return ResponseEntity.ok().body("Password updated successfully");
         }
