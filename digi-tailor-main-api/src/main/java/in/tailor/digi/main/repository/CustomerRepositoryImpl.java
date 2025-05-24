@@ -8,12 +8,14 @@ import in.tailor.digi.utils.DtsDateTimeUtil;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Setter
@@ -39,6 +41,26 @@ public non-sealed class CustomerRepositoryImpl implements CustomerRepository {
             }
             return customerBuilder.build();
         }, userId, limit, offset);
+    }
+
+    @Override
+    public Optional<Customer> getCustomerByCustomerId(String customerId) {
+        final String query = "SELECT DTS_CUSTOMER.CUSTOMER_ID, DTS_CUSTOMER.FIRST_NAME, DTS_CUSTOMER.MIDDLE_NAME, DTS_CUSTOMER.LAST_NAME, " +
+                "DTS_CUSTOMER.MOBILE_NO, DTS_CUSTOMER.EMAIL, DTS_CUSTOMER.CREATED_AT, DTS_CUSTOMER.UPDATED_AT, DTS_CUSTOMER.USER_ID, " +
+                "DTS_CUSTOMER.SHOP_ID FROM DTS_CUSTOMER DTS_CUSTOMER WHERE DTS_CUSTOMER.CUSTOMER_ID = ?";
+        Customer customer;
+        try {
+            customer = jdbcTemplate.queryForObject(query, (rs, rowNum) -> Customer.builder().customerId(rs.getString(DtsColumn.CUSTOMER_ID))
+                    .firstName(rs.getString(DtsColumn.FIRST_NAME)).middleName(rs.getString(DtsColumn.MIDDLE_NAME))
+                    .lastName(rs.getString(DtsColumn.LAST_NAME)).mobileNo(rs.getString(DtsColumn.MOBILE_NO))
+                    .email(rs.getString(DtsColumn.EMAIL))
+                    .createdAt(rs.getObject(DtsColumn.CREATED_AT, LocalDateTime.class))
+                    .updatedAt(rs.getObject(DtsColumn.UPDATED_AT, LocalDateTime.class))
+                    .user(User.builder().userId(rs.getString(DtsColumn.USER_ID)).build()).build(), customerId);
+        } catch (EmptyResultDataAccessException ex) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(customer);
     }
 
     @Override

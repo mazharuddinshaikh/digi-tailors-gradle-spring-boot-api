@@ -8,6 +8,8 @@ import java.util.Optional;
 public sealed interface CustomerService permits CustomerServiceImpl {
     List<Customer> getCustomerByUser(String userId, int limit, int offset);
 
+    Optional<Customer> getCustomerByCustomerId(String customerId);
+
     List<Customer> getCustomerByShop(String shopId, int limit, int offset);
 
     Optional<Customer> addCustomer(Customer customer);

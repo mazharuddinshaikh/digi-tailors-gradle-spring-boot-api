@@ -74,4 +74,11 @@ public class CustomerController {
                 .httpStatus(HttpStatus.FORBIDDEN.value()).build()));
         return ResponseEntity.ok("Customer updated successfully");
     }
+
+    @GetMapping("/v1/{customerId}")
+    @Operation(summary = "Get customer by customer id")
+    public ResponseEntity<Customer> getCustomerByCustomerId(@PathVariable("customerId") String customerId) throws DtsException {
+        return ResponseEntity.ok().body(customerService.getCustomerByCustomerId(customerId).orElseThrow(() -> new DtsException(DtsApiResponse.<String>builder().message("Username / Password incorrect")
+                .httpStatus(HttpStatus.FORBIDDEN.value()).build())));
+    }
 }

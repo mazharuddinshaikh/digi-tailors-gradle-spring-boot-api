@@ -25,6 +25,11 @@ public non-sealed class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Optional<Customer> getCustomerByCustomerId(String customerId) {
+        return customerRepository.getCustomerByCustomerId(customerId);
+    }
+
+    @Override
     public List<Customer> getCustomerByShop(String shopId, int limit, int offset) {
         return customerRepository.getCustomerByShop(shopId, limit, offset);
     }
