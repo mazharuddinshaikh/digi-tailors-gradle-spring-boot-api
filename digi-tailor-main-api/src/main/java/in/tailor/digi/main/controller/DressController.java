@@ -74,7 +74,7 @@ public class DressController {
     @GetMapping("/v1/{dressId}")
     @Operation(summary = "Get dress by dress id")
     public ResponseEntity<Dress> getDressByDressId(@PathVariable("dressId") String dressId) throws DtsException {
-        return ResponseEntity.ok(dressService.getDressByDressId(dressId).orElseThrow(() -> new DtsException(DtsApiResponse.<String>builder().message("no customer found")
+        return ResponseEntity.ok(dressService.getDressByDressId(dressId).orElseThrow(() -> new DtsException(DtsApiResponse.<String>builder().message("no dress found")
                 .httpStatus(HttpStatus.FORBIDDEN.value()).build())));
     }
 

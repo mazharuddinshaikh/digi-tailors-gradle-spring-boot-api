@@ -34,6 +34,13 @@ public class CustomerController {
         return ResponseEntity.ok("Customer Api working");
     }
 
+    @GetMapping("/v1/{customerId}")
+    @Operation(summary = "Get customer by customer id")
+    public ResponseEntity<Customer> getCustomerByCustomerId(@PathVariable("customerId") String customerId) throws DtsException {
+        return ResponseEntity.ok().body(customerService.getCustomerByCustomerId(customerId).orElseThrow(() -> new DtsException(DtsApiResponse.<String>builder().message("customer not found")
+                .httpStatus(HttpStatus.FORBIDDEN.value()).build())));
+    }
+
     @GetMapping("/v1/user/{userId}/{offset}/{limit}")
     @Operation(summary = "Get customer by user")
     public ResponseEntity<List<Customer>> getCustomerByUser(@PathVariable("userId") String userId, @PathVariable("offset") Integer offset,
@@ -75,10 +82,4 @@ public class CustomerController {
         return ResponseEntity.ok("Customer updated successfully");
     }
 
-    @GetMapping("/v1/{customerId}")
-    @Operation(summary = "Get customer by customer id")
-    public ResponseEntity<Customer> getCustomerByCustomerId(@PathVariable("customerId") String customerId) throws DtsException {
-        return ResponseEntity.ok().body(customerService.getCustomerByCustomerId(customerId).orElseThrow(() -> new DtsException(DtsApiResponse.<String>builder().message("Username / Password incorrect")
-                .httpStatus(HttpStatus.FORBIDDEN.value()).build())));
-    }
 }
