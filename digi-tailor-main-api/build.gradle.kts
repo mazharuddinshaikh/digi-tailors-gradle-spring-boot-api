@@ -45,22 +45,6 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.34")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-//    // JUnit 5 (Jupiter)
-//    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0") // or latest
-//
-//    // Spring Boot test support (if using Spring)
-//    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-//        exclude(group = "org.junit.vintage") // prevent conflicts with JUnit 4
-//    }
-//
-//    // Mockito core (optional if included via spring-boot-starter-test)
-//    testImplementation("org.mockito:mockito-core:5.2.0") // or latest
-//
-//    // Mockito + JUnit 5 extension support (important!)
-//    testImplementation("org.mockito:mockito-junit-jupiter:5.2.0")
-//
-//    // Mockito inline (for mocking final classes, interfaces, etc.)
-//    testImplementation("org.mockito:mockito-inline:5.2.0")
     modules {
         module("org.springframework.boot:spring-boot-starter-logging") {
             replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
