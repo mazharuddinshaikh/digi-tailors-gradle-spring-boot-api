@@ -67,11 +67,10 @@ public class ShopController {
 
     @PostMapping("/v1")
     @Operation(summary = "Add shop") //open and close time format should always HH:mm:ss (24-hour format)
-    public ResponseEntity<DtsApiResponse<Shop>> addShop(@RequestBody Shop shop) throws DtsException {
+    public ResponseEntity<String> addShop(@RequestBody Shop shop) throws DtsException {
         final var optionalShop = shopService.addShop(shop);
         if (optionalShop.isPresent()) {
-            return ResponseEntity.ok(DtsApiResponse.<Shop>builder().httpStatus(HttpStatus.OK.value())
-                    .message("shop added successfully").build());
+            return ResponseEntity.ok("shop added successfully");
         }
         throw new DtsException(DtsApiResponse.<String>builder().httpStatus(HttpStatus.FORBIDDEN.value())
                 .message("Shop not added. Please retry").build());
@@ -79,11 +78,10 @@ public class ShopController {
 
     @PutMapping("/v1")
     @Operation(summary = "Update shop")
-    public ResponseEntity<DtsApiResponse<Shop>> updateShop(@RequestBody Shop shop) throws DtsException {
+    public ResponseEntity<String> updateShop(@RequestBody Shop shop) throws DtsException {
         final var optionalShop = shopService.updateShop(shop);
         if (optionalShop.isPresent()) {
-            return ResponseEntity.ok(DtsApiResponse.<Shop>builder().httpStatus(HttpStatus.OK.value())
-                    .message("shop updated successfully").build());
+            return ResponseEntity.ok("shop updated successfully");
         }
         throw new DtsException(DtsApiResponse.<String>builder().httpStatus(HttpStatus.FORBIDDEN.value())
                 .message("Shop update failed. Please retry").build());
@@ -91,11 +89,10 @@ public class ShopController {
 
     @PutMapping("/v1/address")
     @Operation(summary = "Update shop address")
-    public ResponseEntity<DtsApiResponse<Shop>> updateShopAddress(@RequestBody Shop shop) throws DtsException {
+    public ResponseEntity<String> updateShopAddress(@RequestBody Shop shop) throws DtsException {
         final var optionalShop = shopService.updateShopAddress(shop);
         if (optionalShop.isPresent()) {
-            return ResponseEntity.ok(DtsApiResponse.<Shop>builder().httpStatus(HttpStatus.OK.value())
-                    .message("Address updated successfully").build());
+            return ResponseEntity.ok("Address updated successfully");
         }
         throw new DtsException(DtsApiResponse.<String>builder().httpStatus(HttpStatus.FORBIDDEN.value())
                 .message("Address update failed. Please retry").build());

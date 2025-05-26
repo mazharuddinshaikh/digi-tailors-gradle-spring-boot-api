@@ -1,7 +1,6 @@
 package in.tailor.digi.main.controller;
 
 import in.tailor.digi.main.service.ShopServiceImpl;
-import in.tailor.digi.model.DtsApiResponse;
 import in.tailor.digi.model.DtsException;
 import in.tailor.digi.model.Shop;
 import org.junit.jupiter.api.Assertions;
@@ -15,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -109,10 +107,10 @@ class ShopControllerTest {
         // Arrange
         Mockito.when(shopService.addShop(Mockito.any(Shop.class))).thenReturn(Optional.of(shop));
         // Act
-        ResponseEntity<DtsApiResponse<Shop>> response = shopController.addShop(shop);
+        ResponseEntity<String> response = shopController.addShop(shop);
         // Assert
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals("shop added successfully", Objects.requireNonNull(response.getBody()).getMessage());
+        Assertions.assertEquals("shop added successfully", response.getBody());
     }
 
     @Test
@@ -132,10 +130,10 @@ class ShopControllerTest {
         // Arrange
         Mockito.when(shopService.updateShop(Mockito.any(Shop.class))).thenReturn(Optional.of(shop));
         // Act
-        ResponseEntity<DtsApiResponse<Shop>> response = shopController.updateShop(shop);
+        ResponseEntity<String> response = shopController.updateShop(shop);
         // Assert
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals("shop updated successfully", Objects.requireNonNull(response.getBody()).getMessage());
+        Assertions.assertEquals("shop updated successfully", response.getBody());
     }
 
     @Test
@@ -155,10 +153,10 @@ class ShopControllerTest {
         // Arrange
         Mockito.when(shopService.updateShopAddress(Mockito.any(Shop.class))).thenReturn(Optional.of(shop));
         // Act
-        ResponseEntity<DtsApiResponse<Shop>> response = shopController.updateShopAddress(shop);
+        ResponseEntity<String> response = shopController.updateShopAddress(shop);
         // Assert
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals("Address updated successfully", Objects.requireNonNull(response.getBody()).getMessage());
+        Assertions.assertEquals("Address updated successfully", response.getBody());
     }
 
     @Test
