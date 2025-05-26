@@ -50,10 +50,10 @@ public non-sealed class UserValidationServiceImpl implements UserValidationServi
 
     public String validatePassword(String password) {
         if (ObjectUtils.isEmpty(password)) {
-            return "Please enter valid user name. User name is empty.";
+            return "Please enter valid password. Password is empty.";
         }
         if (password.length() < 5) {
-            return "Please enter valid user name. User name must be more than 5 character.";
+            return "Please enter valid password. Password must be more than 5 character.";
         }
         return null;
     }

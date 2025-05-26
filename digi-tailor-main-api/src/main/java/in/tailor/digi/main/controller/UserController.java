@@ -72,7 +72,7 @@ public class UserController {
         final var validationMessage = userValidationService.validatePassword(user.getPassword());
         if (!ObjectUtils.isEmpty(validationMessage)) {
             throw new DtsException(DtsApiResponse.<String>builder().message(validationMessage)
-                    .httpStatus(HttpStatus.NO_CONTENT.value()).build());
+                    .httpStatus(HttpStatus.FORBIDDEN.value()).build());
         }
         final int passwordUpdated = userService.updatePassword(user.getUserId(), user.getPassword());
         if (passwordUpdated > 0) {

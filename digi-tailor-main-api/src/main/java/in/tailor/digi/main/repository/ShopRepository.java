@@ -17,6 +17,6 @@ public sealed interface ShopRepository permits ShopRepositoryImpl {
 
 	int updateShop(Shop shop);
 
-	int deleteShopByShopId(int shopId);
+	int deleteShopByShopId(String shopId);
 
 }

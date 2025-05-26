@@ -24,5 +24,5 @@ public sealed interface ShopService permits ShopServiceImpl {
 
     Optional<Shop> updateShopAddress(Shop shop);
 
-    boolean deleteShopByShopId(int shopId);
+    boolean deleteShopByShopId(String shopId);
 }

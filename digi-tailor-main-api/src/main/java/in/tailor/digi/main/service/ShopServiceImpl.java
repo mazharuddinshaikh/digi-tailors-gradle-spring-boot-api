@@ -95,7 +95,7 @@ public non-sealed class ShopServiceImpl implements ShopService {
 
     @Override
     @Transactional
-    public boolean deleteShopByShopId(int shopId) {
+    public boolean deleteShopByShopId(String shopId) {
         int shopDeleted = shopRepository.deleteShopByShopId(shopId); // delete shop
         if (shopDeleted > 0) {
             log.info("shop deleted successfully shop id {}", shopId);

@@ -60,7 +60,7 @@ public class ShopController {
 
     @GetMapping("/v1/{shopId}")
     @Operation(summary = "Get shop by shop id")
-    public ResponseEntity<Shop> getShopBySopId(@PathVariable("shopId") String shopId) throws DtsException {
+    public ResponseEntity<Shop> getShopByShopId(@PathVariable("shopId") String shopId) throws DtsException {
         return ResponseEntity.ok().body(shopService.getShopByShopId(shopId).orElseThrow(() -> new DtsException(DtsApiResponse.<String>builder()
                 .httpStatus(HttpStatus.NO_CONTENT.value()).build())));
     }
@@ -98,12 +98,12 @@ public class ShopController {
                     .message("Address updated successfully").build());
         }
         throw new DtsException(DtsApiResponse.<String>builder().httpStatus(HttpStatus.FORBIDDEN.value())
-                .message("Shop update failed. Please retry").build());
+                .message("Address update failed. Please retry").build());
     }
 
     @DeleteMapping("/v1/{shopId}")
     @Operation(summary = "Delete shop by id")
-    public ResponseEntity<String> deleteShop(@PathVariable("shopId") Integer shopId) throws DtsException {
+    public ResponseEntity<String> deleteShopByShopId(@PathVariable("shopId") String shopId) throws DtsException {
         final var isShopDeleted = shopService.deleteShopByShopId(shopId);
         if (isShopDeleted) {
             return ResponseEntity.ok("shop deleted successfully");

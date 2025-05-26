@@ -14,6 +14,6 @@ public class DtsStatsController {
     @GetMapping("/test")
     @Operation(summary = "Test If Application is running")
     public ResponseEntity<String> testApi() {
-        return ResponseEntity.ok("Dress Api working");
+        return ResponseEntity.ok("Stats Api working");
     }
 }

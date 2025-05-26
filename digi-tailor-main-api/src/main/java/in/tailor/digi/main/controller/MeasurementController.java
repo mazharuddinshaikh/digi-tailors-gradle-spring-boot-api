@@ -19,7 +19,7 @@ public class MeasurementController {
 	@GetMapping("/test")
 	@Operation(summary = "Test If Application is running")
 	public ResponseEntity<String> testApi() {
-		return ResponseEntity.ok("Invoice Api working");
+		return ResponseEntity.ok("Measurement Api working");
 	}
 
 }

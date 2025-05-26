@@ -123,7 +123,7 @@ public non-sealed class ShopRepositoryImpl implements ShopRepository {
     }
 
     @Override
-    public int deleteShopByShopId(int shopId) {
+    public int deleteShopByShopId(String shopId) {
         return jdbcTemplate.update("DELETE FROM DTS_SHOP WHERE SHOP_ID = ?", shopId);
     }
 }
