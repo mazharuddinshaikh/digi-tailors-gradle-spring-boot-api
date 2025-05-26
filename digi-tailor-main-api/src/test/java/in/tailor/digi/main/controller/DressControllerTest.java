@@ -52,7 +52,7 @@ class DressControllerTest {
         DtsException thrown = Assertions.assertThrows(DtsException.class, () ->
                 dressController.getDressByUser(userId, offset, limit)
         );
-        Assertions.assertEquals(403, thrown.getResponse().getHttpStatus());
+        Assertions.assertEquals(204, thrown.getResponse().getHttpStatus());
         Mockito.verify(dressService).getDressByUser(userId, limit, offset);
     }
 
@@ -78,7 +78,7 @@ class DressControllerTest {
         DtsException thrown = Assertions.assertThrows(DtsException.class, () ->
                 dressController.getDressByShop(userId, offset, limit)
         );
-        Assertions.assertEquals(403, thrown.getResponse().getHttpStatus());
+        Assertions.assertEquals(204, thrown.getResponse().getHttpStatus());
         Mockito.verify(dressService).getDressByShop(userId, limit, offset);
     }
 
@@ -104,7 +104,7 @@ class DressControllerTest {
         DtsException thrown = Assertions.assertThrows(DtsException.class, () ->
                 dressController.getDressByCustomer(userId, offset, limit)
         );
-        Assertions.assertEquals(403, thrown.getResponse().getHttpStatus());
+        Assertions.assertEquals(204, thrown.getResponse().getHttpStatus());
         Mockito.verify(dressService).getDressByCustomer(userId, limit, offset);
     }
 
@@ -130,7 +130,7 @@ class DressControllerTest {
         // Act & Assert
         DtsException exception = Assertions.assertThrows(DtsException.class, () -> dressController.getDressByDressId("DTS_CUST_123"));
         Assertions.assertEquals("no dress found", exception.getResponse().getMessage());
-        Assertions.assertEquals(403, exception.getResponse().getHttpStatus());
+        Assertions.assertEquals(204, exception.getResponse().getHttpStatus());
     }
 
     @Test

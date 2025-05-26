@@ -38,7 +38,7 @@ public class CustomerController {
     @Operation(summary = "Get customer by customer id")
     public ResponseEntity<Customer> getCustomerByCustomerId(@PathVariable("customerId") String customerId) throws DtsException {
         return ResponseEntity.ok().body(customerService.getCustomerByCustomerId(customerId).orElseThrow(() -> new DtsException(DtsApiResponse.<String>builder().message("customer not found")
-                .httpStatus(HttpStatus.FORBIDDEN.value()).build())));
+                .httpStatus(HttpStatus.NO_CONTENT.value()).build())));
     }
 
     @GetMapping("/v1/user/{userId}/{offset}/{limit}")

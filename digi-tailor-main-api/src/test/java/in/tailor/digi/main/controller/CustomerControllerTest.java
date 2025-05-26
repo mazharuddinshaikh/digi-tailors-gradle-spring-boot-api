@@ -58,7 +58,7 @@ public class CustomerControllerTest {
         // Act & Assert
         DtsException exception = Assertions.assertThrows(DtsException.class, () -> customerController.getCustomerByCustomerId("DTS_CUST_123"));
         Assertions.assertEquals("customer not found", exception.getResponse().getMessage());
-        Assertions.assertEquals(403, exception.getResponse().getHttpStatus());
+        Assertions.assertEquals(204, exception.getResponse().getHttpStatus());
     }
 
     @Test

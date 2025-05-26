@@ -42,7 +42,7 @@ public class DressController {
             return ResponseEntity.ok(dressList);
         }
         throw new DtsException(DtsApiResponse.<String>builder().message("no customer found")
-                .httpStatus(HttpStatus.FORBIDDEN.value()).build());
+                .httpStatus(HttpStatus.NO_CONTENT.value()).build());
     }
 
     @GetMapping("/v1/shop/{shopId}/{offset}/{limit}")
@@ -54,7 +54,7 @@ public class DressController {
             return ResponseEntity.ok(dressList);
         }
         throw new DtsException(DtsApiResponse.<String>builder().message("no customer found")
-                .httpStatus(HttpStatus.FORBIDDEN.value()).build());
+                .httpStatus(HttpStatus.NO_CONTENT.value()).build());
 
     }
 
@@ -67,7 +67,7 @@ public class DressController {
             return ResponseEntity.ok(dressList);
         }
         throw new DtsException(DtsApiResponse.<String>builder().message("no customer found")
-                .httpStatus(HttpStatus.FORBIDDEN.value()).build());
+                .httpStatus(HttpStatus.NO_CONTENT.value()).build());
 
     }
 
@@ -75,7 +75,7 @@ public class DressController {
     @Operation(summary = "Get dress by dress id")
     public ResponseEntity<Dress> getDressByDressId(@PathVariable("dressId") String dressId) throws DtsException {
         return ResponseEntity.ok(dressService.getDressByDressId(dressId).orElseThrow(() -> new DtsException(DtsApiResponse.<String>builder().message("no dress found")
-                .httpStatus(HttpStatus.FORBIDDEN.value()).build())));
+                .httpStatus(HttpStatus.NO_CONTENT.value()).build())));
     }
 
     @PostMapping("/v1")
