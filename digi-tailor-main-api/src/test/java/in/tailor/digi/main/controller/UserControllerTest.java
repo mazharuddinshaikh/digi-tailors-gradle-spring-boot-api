@@ -26,7 +26,7 @@ class UserControllerTest {
     private UserController userController;
 
     @Test
-    public void testApi_ShouldReturnOk() throws Exception {
+    public void testApi_ShouldReturnOk() {
         var result = userController.testApi();
         Assertions.assertEquals("User Api working", result.getBody());
     }
@@ -73,9 +73,7 @@ class UserControllerTest {
         // Arrange
         Mockito.when(userValidationService.validateSignupUser(Mockito.any(User.class))).thenReturn("Please enter valid user name");
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            userController.signup(user);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> userController.signup(user));
         Assertions.assertEquals("Please enter valid user name", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());
     }
@@ -87,9 +85,7 @@ class UserControllerTest {
         Mockito.when(userValidationService.validateSignupUser(Mockito.any(User.class))).thenReturn(null);
         Mockito.when(userService.signup(Mockito.any(User.class))).thenReturn(Optional.empty());
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            userController.signup(user);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> userController.signup(user));
         Assertions.assertEquals("Something went wrong. Please retry", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());
     }
@@ -113,9 +109,7 @@ class UserControllerTest {
         // Arrange
         Mockito.when(userValidationService.validateUpdateUser(Mockito.any(User.class))).thenReturn("Please enter valid user name");
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            userController.updateUser(user);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> userController.updateUser(user));
         Assertions.assertEquals("Please enter valid user name", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());
     }
@@ -127,9 +121,7 @@ class UserControllerTest {
         Mockito.when(userValidationService.validateUpdateUser(Mockito.any(User.class))).thenReturn(null);
         Mockito.when(userService.updateUser(Mockito.any(User.class))).thenReturn(Optional.empty());
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            userController.updateUser(user);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> userController.updateUser(user));
         Assertions.assertEquals("Something went wrong. Please retry", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());
     }
@@ -157,9 +149,7 @@ class UserControllerTest {
         // Arrange
         Mockito.when(userValidationService.validatePassword(Mockito.anyString())).thenReturn("Please enter valid password. Password is empty.");
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            userController.updatePassword(user);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> userController.updatePassword(user));
         Assertions.assertEquals("Please enter valid password. Password is empty.", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());
     }
@@ -173,9 +163,7 @@ class UserControllerTest {
         Mockito.when(userValidationService.validatePassword(Mockito.anyString())).thenReturn(null);
         Mockito.when(userService.updatePassword(Mockito.anyString(), Mockito.anyString())).thenReturn(0);
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            userController.updatePassword(user);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> userController.updatePassword(user));
         Assertions.assertEquals("Something went wrong. Please retry", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());
     }

@@ -12,7 +12,7 @@ class InvoiceControllerTest {
     private InvoiceController invoiceController;
 
     @Test
-    public void testApi_ShouldReturnOk() throws Exception {
+    public void testApi_ShouldReturnOk() {
         var result = invoiceController.testApi();
         Assertions.assertEquals("Invoice Api working", result.getBody());
     }

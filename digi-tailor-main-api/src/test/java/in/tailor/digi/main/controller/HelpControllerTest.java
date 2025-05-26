@@ -12,7 +12,7 @@ class HelpControllerTest {
     private HelpController helpController;
 
     @Test
-    public void testApi_ShouldReturnOk() throws Exception {
+    public void testApi_ShouldReturnOk() {
         var result = helpController.testApi();
         Assertions.assertEquals("Help Api working", result.getBody());
     }

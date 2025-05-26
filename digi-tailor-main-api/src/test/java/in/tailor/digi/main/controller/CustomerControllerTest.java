@@ -31,7 +31,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void testApi_ShouldReturnOk() throws Exception {
+    public void testApi_ShouldReturnOk() {
         var result = customerController.testApi();
         Assertions.assertEquals("Customer Api working", result.getBody());
     }
@@ -56,9 +56,7 @@ public class CustomerControllerTest {
         Mockito.when(customerService.getCustomerByCustomerId(Mockito.anyString()))
                 .thenReturn(Optional.empty());
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            customerController.getCustomerByCustomerId("DTS_CUST_123");
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> customerController.getCustomerByCustomerId("DTS_CUST_123"));
         Assertions.assertEquals("customer not found", exception.getResponse().getMessage());
         Assertions.assertEquals(403, exception.getResponse().getHttpStatus());
     }
@@ -136,9 +134,7 @@ public class CustomerControllerTest {
         Mockito.when(customerService.addCustomer(Mockito.any(Customer.class))).thenReturn(Optional.empty());
 
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            customerController.addCustomer(mockCustomer);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> customerController.addCustomer(mockCustomer));
 
         Assertions.assertEquals("Something went wrong. Please retry", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());
@@ -165,9 +161,7 @@ public class CustomerControllerTest {
         Mockito.when(customerService.updateCustomer(Mockito.any(Customer.class))).thenReturn(Optional.empty());
 
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            customerController.updateCustomer(mockCustomer);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> customerController.updateCustomer(mockCustomer));
 
         Assertions.assertEquals("Something went wrong. Please retry", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());

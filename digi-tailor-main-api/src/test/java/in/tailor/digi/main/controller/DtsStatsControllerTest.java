@@ -12,7 +12,7 @@ class DtsStatsControllerTest {
     private DtsStatsController dtsStatsController;
 
     @Test
-    public void testApi_ShouldReturnOk() throws Exception {
+    public void testApi_ShouldReturnOk() {
         var result = dtsStatsController.testApi();
         Assertions.assertEquals("Stats Api working", result.getBody());
     }

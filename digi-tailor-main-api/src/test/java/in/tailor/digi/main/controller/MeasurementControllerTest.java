@@ -12,7 +12,7 @@ class MeasurementControllerTest {
     private MeasurementController measurementController;
 
     @Test
-    public void testApi_ShouldReturnOk() throws Exception {
+    public void testApi_ShouldReturnOk() {
         var result = measurementController.testApi();
         Assertions.assertEquals("Measurement Api working", result.getBody());
     }

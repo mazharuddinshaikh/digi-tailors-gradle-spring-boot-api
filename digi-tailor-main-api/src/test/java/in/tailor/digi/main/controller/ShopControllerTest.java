@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,7 +27,7 @@ class ShopControllerTest {
 
 
     @Test
-    public void testApi_ShouldReturnOk() throws Exception {
+    public void testApi_ShouldReturnOk() {
         var result = shopController.testApi();
         Assertions.assertEquals("Shop Api working", result.getBody());
     }
@@ -94,8 +95,6 @@ class ShopControllerTest {
     @Test
     void getShopByShopId_ShouldThrowDtsException_WhenEmpty() {
         String shopId = "DTS_SHP_123";
-        int offset = 0;
-        int limit = 10;
         Mockito.when(shopService.getShopByShopId(Mockito.anyString())).thenReturn(Optional.empty());
         DtsException thrown = Assertions.assertThrows(DtsException.class, () ->
                 shopController.getShopByShopId(shopId)
@@ -113,7 +112,7 @@ class ShopControllerTest {
         ResponseEntity<DtsApiResponse<Shop>> response = shopController.addShop(shop);
         // Assert
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals("shop added successfully", response.getBody().getMessage());
+        Assertions.assertEquals("shop added successfully", Objects.requireNonNull(response.getBody()).getMessage());
     }
 
     @Test
@@ -122,9 +121,7 @@ class ShopControllerTest {
         // Arrange
         Mockito.when(shopService.addShop(Mockito.any(Shop.class))).thenReturn(Optional.empty());
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            shopController.addShop(shop);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> shopController.addShop(shop));
         Assertions.assertEquals("Shop not added. Please retry", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());
     }
@@ -138,7 +135,7 @@ class ShopControllerTest {
         ResponseEntity<DtsApiResponse<Shop>> response = shopController.updateShop(shop);
         // Assert
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals("shop updated successfully", response.getBody().getMessage());
+        Assertions.assertEquals("shop updated successfully", Objects.requireNonNull(response.getBody()).getMessage());
     }
 
     @Test
@@ -147,9 +144,7 @@ class ShopControllerTest {
         // Arrange
         Mockito.when(shopService.updateShop(Mockito.any(Shop.class))).thenReturn(Optional.empty());
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            shopController.updateShop(shop);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> shopController.updateShop(shop));
         Assertions.assertEquals("Shop update failed. Please retry", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());
     }
@@ -163,7 +158,7 @@ class ShopControllerTest {
         ResponseEntity<DtsApiResponse<Shop>> response = shopController.updateShopAddress(shop);
         // Assert
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals("Address updated successfully", response.getBody().getMessage());
+        Assertions.assertEquals("Address updated successfully", Objects.requireNonNull(response.getBody()).getMessage());
     }
 
     @Test
@@ -172,9 +167,7 @@ class ShopControllerTest {
         // Arrange
         Mockito.when(shopService.updateShopAddress(Mockito.any(Shop.class))).thenReturn(Optional.empty());
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            shopController.updateShopAddress(shop);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> shopController.updateShopAddress(shop));
         Assertions.assertEquals("Address update failed. Please retry", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());
     }
@@ -182,7 +175,6 @@ class ShopControllerTest {
     @Test
     void deleteShopByShopId_ShouldDeleteShop() throws DtsException {
         String shopId = "DTS_SHP_123";
-        Shop shop = new Shop();
         Mockito.when(shopService.deleteShopByShopId(Mockito.anyString())).thenReturn(true);
         ResponseEntity<String> response = shopController.deleteShopByShopId(shopId);
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -193,8 +185,6 @@ class ShopControllerTest {
     @Test
     void deleteShopByShopId_ShouldThrowDtsException_WhenEmpty() {
         String shopId = "DTS_SHP_123";
-        int offset = 0;
-        int limit = 10;
         Mockito.when(shopService.deleteShopByShopId(Mockito.anyString())).thenReturn(false);
         DtsException exception = Assertions.assertThrows(DtsException.class, () ->
                 shopController.deleteShopByShopId(shopId)

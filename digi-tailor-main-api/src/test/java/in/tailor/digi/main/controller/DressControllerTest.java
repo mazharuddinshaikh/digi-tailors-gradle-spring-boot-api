@@ -1,7 +1,6 @@
 package in.tailor.digi.main.controller;
 
 import in.tailor.digi.main.service.DressServiceImpl;
-import in.tailor.digi.model.Customer;
 import in.tailor.digi.model.Dress;
 import in.tailor.digi.model.DtsException;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +25,7 @@ class DressControllerTest {
     private DressController dressController;
 
     @Test
-    public void testApi_ShouldReturnOk() throws Exception {
+    public void testApi_ShouldReturnOk() {
         var result = dressController.testApi();
         Assertions.assertEquals("Dress Api working", result.getBody());
     }
@@ -129,9 +128,7 @@ class DressControllerTest {
         Mockito.when(dressService.getDressByDressId(Mockito.anyString()))
                 .thenReturn(Optional.empty());
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            dressController.getDressByDressId("DTS_CUST_123");
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> dressController.getDressByDressId("DTS_CUST_123"));
         Assertions.assertEquals("no dress found", exception.getResponse().getMessage());
         Assertions.assertEquals(403, exception.getResponse().getHttpStatus());
     }
@@ -157,9 +154,7 @@ class DressControllerTest {
         Mockito.when(dressService.addDress(Mockito.any(Dress.class))).thenReturn(Optional.empty());
 
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            dressController.addDress(dress);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> dressController.addDress(dress));
 
         Assertions.assertEquals("Something went wrong. Please retry", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());
@@ -186,9 +181,7 @@ class DressControllerTest {
         Mockito.when(dressService.updateDress(Mockito.any(Dress.class))).thenReturn(Optional.empty());
 
         // Act & Assert
-        DtsException exception = Assertions.assertThrows(DtsException.class, () -> {
-            dressController.updateDress(dress);
-        });
+        DtsException exception = Assertions.assertThrows(DtsException.class, () -> dressController.updateDress(dress));
 
         Assertions.assertEquals("Something went wrong. Please retry", exception.getResponse().getMessage());
         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), exception.getResponse().getHttpStatus());
