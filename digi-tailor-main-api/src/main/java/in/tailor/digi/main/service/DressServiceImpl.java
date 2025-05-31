@@ -30,8 +30,8 @@ public non-sealed class DressServiceImpl implements DressService {
     }
 
     @Override
-    public List<Dress> getDressByCustomer(String shopId, int limit, int offset) {
-        return dressRepository.getDressByCustomer(shopId, limit, offset);
+    public List<Dress> getDressByCustomer(String customerId, int limit, int offset) {
+        return dressRepository.getDressByCustomer(customerId, limit, offset);
     }
 
     @Override

@@ -49,20 +49,14 @@ public non-sealed class UserValidationServiceImpl implements UserValidationServi
     }
 
     public String validatePassword(String password) {
-        if (ObjectUtils.isEmpty(password)) {
-            return "Please enter valid password. Password is empty.";
-        }
-        if (password.length() < 5) {
+        if (ObjectUtils.isEmpty(password) || password.length() < 5) {
             return "Please enter valid password. Password must be more than 5 character.";
         }
         return null;
     }
 
     private String validateUserName(String userName) {
-        if (ObjectUtils.isEmpty(userName)) {
-            return "Please enter valid user name. User name is empty.";
-        }
-        if (userName.length() < 5) {
+        if (ObjectUtils.isEmpty(userName) || userName.length() < 5) {
             return "Please enter valid user name. User name must be more than 5 character.";
         }
         if (userRepository.isUserNameExist(userName)) {
