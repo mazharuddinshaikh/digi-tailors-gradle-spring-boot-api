@@ -28,7 +28,8 @@ class AddressRepositoryImplTest {
         Address address = new Address();
         address.setAddressId("TEST_ID");
         shop.setShopAddress(address);
-        Mockito.when(jdbcTemplate.update(Mockito.anyString(), Mockito.anyString(), Mockito.any(LocalDateTime.class), Mockito.anyString()))
+        Mockito.when(jdbcTemplate.update(Mockito.anyString(), Mockito.anyString(), Mockito.any(LocalDateTime.class),
+                        Mockito.anyString()))
                 .thenReturn(1);
         var result = addressRepository.updateShopAddress(shop);
         Assertions.assertEquals(1, result);

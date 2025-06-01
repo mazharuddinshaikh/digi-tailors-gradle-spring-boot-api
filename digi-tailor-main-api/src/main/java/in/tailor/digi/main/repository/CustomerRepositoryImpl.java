@@ -75,10 +75,8 @@ public non-sealed class CustomerRepositoryImpl implements CustomerRepository {
                     .email(rs.getString(DtsColumn.EMAIL))
                     .createdAt(rs.getObject(DtsColumn.CREATED_AT, LocalDateTime.class))
                     .updatedAt(rs.getObject(DtsColumn.UPDATED_AT, LocalDateTime.class))
-                    .user(User.builder().userId(rs.getString(DtsColumn.USER_ID)).build());
-            if (StringUtils.isNotEmpty(rs.getString(DtsColumn.SHOP_ID))) {
-                customerBuilder.shop(Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID)).build());
-            }
+                    .user(User.builder().userId(rs.getString(DtsColumn.USER_ID)).build())
+                    .shop(Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID)).build());
             return customerBuilder.build();
         }, shopId, limit, offset);
     }

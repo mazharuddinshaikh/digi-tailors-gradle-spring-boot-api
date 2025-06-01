@@ -9,9 +9,9 @@ import in.tailor.digi.model.table.DtsColumn;
 import in.tailor.digi.utils.DtsDateTimeUtil;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -73,19 +73,21 @@ public non-sealed class DressRepositoryImpl implements DressRepository {
     public Optional<Dress> getDressByDressId(String dressId) {
         String query = "SELECT DTS_DRESS.DRESS_ID, DTS_DRESS.USER_ID, DTS_DRESS.SHOP_ID, DTS_DRESS.CUSTOMER_ID, " +
                 "DTS_DRESS.COMMENT, DTS_DRESS.CREATED_AT, DTS_DRESS.UPDATED_AT FROM DTS_DRESS DTS_DRESS WHERE DTS_DRESS.DRESS_ID = ?";
-        final var dresList = jdbcTemplate.query(query, (rs, rowNum) -> Dress.builder()
-                .dressId(rs.getString(DtsColumn.DRESS_ID))
-                .user(User.builder().userId(rs.getString(DtsColumn.USER_ID)).build())
-                .shop(Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID)).build())
-                .customer(Customer.builder().customerId(rs.getString(DtsColumn.CUSTOMER_ID)).build())
-                .comment(rs.getString(DtsColumn.COMMENT))
-                .createdAt(rs.getObject(DtsColumn.CREATED_AT, LocalDateTime.class))
-                .updatedAt(rs.getObject(DtsColumn.UPDATED_AT, LocalDateTime.class))
-                .build(), dressId);
-        if (!CollectionUtils.isEmpty(dresList)) {
-            return Optional.of(dresList.get(0));
+        Dress dress;
+        try {
+            dress = jdbcTemplate.queryForObject(query, (rs, rowNum) -> Dress.builder()
+                    .dressId(rs.getString(DtsColumn.DRESS_ID))
+                    .user(User.builder().userId(rs.getString(DtsColumn.USER_ID)).build())
+                    .shop(Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID)).build())
+                    .customer(Customer.builder().customerId(rs.getString(DtsColumn.CUSTOMER_ID)).build())
+                    .comment(rs.getString(DtsColumn.COMMENT))
+                    .createdAt(rs.getObject(DtsColumn.CREATED_AT, LocalDateTime.class))
+                    .updatedAt(rs.getObject(DtsColumn.UPDATED_AT, LocalDateTime.class))
+                    .build(), dressId);
+        } catch (EmptyResultDataAccessException ex) {
+            return Optional.empty();
         }
-        return Optional.empty();
+        return Optional.ofNullable(dress);
     }
 
     @Override

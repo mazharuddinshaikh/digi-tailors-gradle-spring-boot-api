@@ -16,9 +16,9 @@ public non-sealed class UserShopMappingRepositoryImpl implements UserShopMapping
     @Override
     public int addUserShopMapping(UserShopMapping userShopMapping) {
         return jdbcTemplate.update(
-                "INSERT INTO DTS_USER_SHOP_MAPPING ( USER_ID, SHOP_ID, USER_TYPE, CREATED_AT, UPDATED_AT) VALUES (?, ?, ?, ?, ?)",
+                "INSERT INTO DTS_USER_SHOP_MAPPING ( USER_ID, SHOP_ID, USER_TYPE, CREATED_AT) VALUES (?, ?, ?, ?)",
                 userShopMapping.getUserId(), userShopMapping.getShopId(), userShopMapping.getUserType(),
-                DtsDateTimeUtil.getIndianCurrentDateTime(), null);
+                DtsDateTimeUtil.getIndianCurrentDateTime());
     }
 
     @Override

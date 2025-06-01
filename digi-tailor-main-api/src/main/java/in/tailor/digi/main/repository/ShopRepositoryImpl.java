@@ -105,12 +105,12 @@ public non-sealed class ShopRepositoryImpl implements ShopRepository {
 
     @Override
     public int addShop(Shop shop) {
-        final String sql = "INSERT INTO DTS_SHOP (SHOP_ID, SHOP_NAME, SHOP_CODE, CREATED_AT, UPDATED_AT, ADDRESS_ID, HOLIDAY, " +
+        final String sql = "INSERT INTO DTS_SHOP (SHOP_ID, SHOP_NAME, SHOP_CODE, CREATED_AT, ADDRESS_ID, HOLIDAY, " +
                 "OPEN_TIME, CLOSE_TIME, SHOP_STATUS, MOBILE_NO, ALTERNATE_MOBILE_NO, SHOP_IMAGE) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(
                 sql,
-                shop.getShopId(), shop.getShopName(), shop.getShopCode(), DtsDateTimeUtil.getIndianCurrentDateTime(), null,
+                shop.getShopId(), shop.getShopName(), shop.getShopCode(), DtsDateTimeUtil.getIndianCurrentDateTime(),
                 Objects.nonNull(shop.getShopAddress()) ? shop.getShopAddress().getAddressId() : null, shop.getHoliday(),
                 shop.getOpenTime(), shop.getCloseTime(), shop.getShopStatus(), shop.getMobileNo(), shop.getAlternateMobileNo(),
                 shop.getShopImage());

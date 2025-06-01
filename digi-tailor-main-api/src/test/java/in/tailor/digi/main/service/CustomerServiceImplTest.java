@@ -25,13 +25,13 @@ class CustomerServiceImplTest {
 
     @Test
     void getCustomerByCustomerId() {
-        var result = customerService.getCustomerByUser("USR_123", 10, 0);
+        var result = customerService.getCustomerByCustomerId("cust123");
         Assertions.assertNotNull(result);
     }
 
     @Test
     void getCustomerByShop() {
-        var result = customerService.getCustomerByUser("USR_123", 10, 0);
+        var result = customerService.getCustomerByShop("SHP_123", 10, 0);
         Assertions.assertNotNull(result);
     }
 
