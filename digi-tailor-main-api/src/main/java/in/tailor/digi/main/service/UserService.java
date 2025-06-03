@@ -6,12 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 public sealed interface UserService permits UserServiceImpl {
-	Optional<User> signIn(String userName, String password);
-	Optional<User> signup(User user);
+    Optional<User> signIn(String userName, String password);
 
-	@Transactional
-	Optional<User> updateUser(User user);
+    Optional<User> signup(User user);
 
-	@Transactional
-	int updatePassword(String userId, String password);
+    @Transactional
+    Optional<User> updateUser(User user);
+
+    @Transactional
+    int updatePassword(String userId, String password);
 }

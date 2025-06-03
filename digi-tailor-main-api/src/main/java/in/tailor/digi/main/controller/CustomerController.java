@@ -45,7 +45,7 @@ public class CustomerController {
     @Operation(summary = "Get customer by user")
     public ResponseEntity<List<Customer>> getCustomerByUser(@PathVariable("userId") String userId, @PathVariable("offset") Integer offset,
                                                             @PathVariable("limit") Integer limit) throws DtsException {
-        var customerList = customerService.getCustomerByUser(userId, limit, offset);
+        var customerList = customerService.getCustomerByUser(userId, offset, limit);
         if (!CollectionUtils.isEmpty(customerList)) {
             return ResponseEntity.ok(customerList);
         }
@@ -58,7 +58,7 @@ public class CustomerController {
     @Operation(summary = "Get customer by shop")
     public ResponseEntity<List<Customer>> getCustomerByShop(@PathVariable("shopId") String shopId, @PathVariable("offset") Integer offset,
                                                             @PathVariable("limit") Integer limit) throws DtsException {
-        var customerList = customerService.getCustomerByShop(shopId, limit, offset);
+        var customerList = customerService.getCustomerByShop(shopId, offset, limit);
         if (!CollectionUtils.isEmpty(customerList)) {
             return ResponseEntity.ok(customerList);
         }

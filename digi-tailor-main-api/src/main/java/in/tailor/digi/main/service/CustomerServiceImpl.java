@@ -20,8 +20,8 @@ public non-sealed class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
 
     @Override
-    public List<Customer> getCustomerByUser(String userId, int limit, int offset) {
-        return customerRepository.getCustomerByUser(userId, limit, offset);
+    public List<Customer> getCustomerByUser(String userId, int offset, int limit) {
+        return customerRepository.getCustomerByUser(userId, offset, limit);
     }
 
     @Override
@@ -30,8 +30,8 @@ public non-sealed class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getCustomerByShop(String shopId, int limit, int offset) {
-        return customerRepository.getCustomerByShop(shopId, limit, offset);
+    public List<Customer> getCustomerByShop(String shopId, int offset, int limit) {
+        return customerRepository.getCustomerByShop(shopId, offset, limit);
     }
 
     @Override

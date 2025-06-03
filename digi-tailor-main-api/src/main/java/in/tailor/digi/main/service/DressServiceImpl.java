@@ -20,18 +20,18 @@ public non-sealed class DressServiceImpl implements DressService {
     private DressRepository dressRepository;
 
     @Override
-    public List<Dress> getDressByUser(String userId, int limit, int offset) {
-        return dressRepository.getDressByUser(userId, limit, offset);
+    public List<Dress> getDressByUser(String userId, int offset, int limit) {
+        return dressRepository.getDressByUser(userId, offset, limit);
     }
 
     @Override
-    public List<Dress> getDressByShop(String shopId, int limit, int offset) {
-        return dressRepository.getDressByShop(shopId, limit, offset);
+    public List<Dress> getDressByShop(String shopId, int offset, int limit) {
+        return dressRepository.getDressByShop(shopId, offset, limit);
     }
 
     @Override
-    public List<Dress> getDressByCustomer(String customerId, int limit, int offset) {
-        return dressRepository.getDressByCustomer(customerId, limit, offset);
+    public List<Dress> getDressByCustomer(String customerId, int offset, int limit) {
+        return dressRepository.getDressByCustomer(customerId, offset, limit);
     }
 
     @Override

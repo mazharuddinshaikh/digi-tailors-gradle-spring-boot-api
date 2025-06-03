@@ -37,7 +37,7 @@ public class DressController {
     @Operation(summary = "Get dress list by user")
     public ResponseEntity<List<Dress>> getDressByUser(@PathVariable("userId") String userId, @PathVariable("offset") Integer offset,
                                                       @PathVariable("limit") Integer limit) throws DtsException {
-        final var dressList = dressService.getDressByUser(userId, limit, offset);
+        final var dressList = dressService.getDressByUser(userId, offset, limit);
         if (!CollectionUtils.isEmpty(dressList)) {
             return ResponseEntity.ok(dressList);
         }
@@ -49,7 +49,7 @@ public class DressController {
     @Operation(summary = "Get dress list by shop")
     public ResponseEntity<List<Dress>> getDressByShop(@PathVariable("shopId") String shopId, @PathVariable("offset") Integer offset,
                                                       @PathVariable("limit") Integer limit) throws DtsException {
-        final var dressList = dressService.getDressByShop(shopId, limit, offset);
+        final var dressList = dressService.getDressByShop(shopId, offset, limit);
         if (!CollectionUtils.isEmpty(dressList)) {
             return ResponseEntity.ok(dressList);
         }
@@ -62,7 +62,7 @@ public class DressController {
     @Operation(summary = "Get dress list by customer")
     public ResponseEntity<List<Dress>> getDressByCustomer(@PathVariable("customerId") String customerId, @PathVariable("offset") Integer offset,
                                                           @PathVariable("limit") Integer limit) throws DtsException {
-        final var dressList = dressService.getDressByCustomer(customerId, limit, offset);
+        final var dressList = dressService.getDressByCustomer(customerId, offset, limit);
         if (!CollectionUtils.isEmpty(dressList)) {
             return ResponseEntity.ok(dressList);
         }

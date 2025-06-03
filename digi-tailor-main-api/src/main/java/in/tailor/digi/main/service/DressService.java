@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public sealed interface DressService permits DressServiceImpl {
-    List<Dress> getDressByUser(String userId, int limit, int offset);
+    List<Dress> getDressByUser(String userId, int offset, int limit);
 
-    List<Dress> getDressByShop(String shopId, int limit, int offset);
+    List<Dress> getDressByShop(String shopId, int offset, int limit);
 
-    List<Dress> getDressByCustomer(String customerId, int limit, int offset);
+    List<Dress> getDressByCustomer(String customerId, int offset, int limit);
 
     Optional<Dress> getDressByDressId(String dressId);
 

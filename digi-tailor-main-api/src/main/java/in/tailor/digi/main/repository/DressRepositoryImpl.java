@@ -25,7 +25,7 @@ public non-sealed class DressRepositoryImpl implements DressRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Dress> getDressByUser(String userId, int limit, int offset) {
+    public List<Dress> getDressByUser(String userId, int offset, int limit) {
         String query = "SELECT DTS_DRESS.DRESS_ID, DTS_DRESS.USER_ID, DTS_DRESS.SHOP_ID, DTS_DRESS.CUSTOMER_ID, " +
                 "DTS_DRESS.COMMENT, DTS_DRESS.CREATED_AT, DTS_DRESS.UPDATED_AT FROM DTS_DRESS DTS_DRESS WHERE DTS_DRESS.USER_ID = ? LIMIT ? OFFSET ?";
         return jdbcTemplate.query(query, (rs, rowNum) -> Dress.builder()
@@ -40,7 +40,7 @@ public non-sealed class DressRepositoryImpl implements DressRepository {
     }
 
     @Override
-    public List<Dress> getDressByShop(String shopId, int limit, int offset) {
+    public List<Dress> getDressByShop(String shopId, int offset, int limit) {
         String query = "SELECT DTS_DRESS.DRESS_ID, DTS_DRESS.USER_ID, DTS_DRESS.SHOP_ID, DTS_DRESS.CUSTOMER_ID, " +
                 "DTS_DRESS.COMMENT, DTS_DRESS.CREATED_AT, DTS_DRESS.UPDATED_AT FROM DTS_DRESS DTS_DRESS WHERE DTS_DRESS.SHOP_ID = ? LIMIT ? OFFSET ?";
         return jdbcTemplate.query(query, (rs, rowNum) -> Dress.builder()
@@ -55,7 +55,7 @@ public non-sealed class DressRepositoryImpl implements DressRepository {
     }
 
     @Override
-    public List<Dress> getDressByCustomer(String customerId, int limit, int offset) {
+    public List<Dress> getDressByCustomer(String customerId, int offset, int limit) {
         String query = "SELECT DTS_DRESS.DRESS_ID, DTS_DRESS.USER_ID, DTS_DRESS.SHOP_ID, DTS_DRESS.CUSTOMER_ID, " +
                 "DTS_DRESS.COMMENT, DTS_DRESS.CREATED_AT, DTS_DRESS.UPDATED_AT FROM DTS_DRESS DTS_DRESS WHERE DTS_DRESS.CUSTOMER_ID = ? LIMIT ? OFFSET ?";
         return jdbcTemplate.query(query, (rs, rowNum) -> Dress.builder()

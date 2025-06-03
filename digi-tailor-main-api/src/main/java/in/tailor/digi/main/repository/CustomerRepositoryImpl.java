@@ -24,7 +24,7 @@ public non-sealed class CustomerRepositoryImpl implements CustomerRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Customer> getCustomerByUser(String userId, int limit, int offset) {
+    public List<Customer> getCustomerByUser(String userId, int offset, int limit) {
         final String query = "SELECT DTS_CUSTOMER.CUSTOMER_ID, DTS_CUSTOMER.FIRST_NAME, DTS_CUSTOMER.MIDDLE_NAME, DTS_CUSTOMER.LAST_NAME, " +
                 "DTS_CUSTOMER.MOBILE_NO, DTS_CUSTOMER.EMAIL, DTS_CUSTOMER.CREATED_AT, DTS_CUSTOMER.UPDATED_AT, DTS_CUSTOMER.USER_ID, " +
                 "DTS_CUSTOMER.SHOP_ID FROM DTS_CUSTOMER DTS_CUSTOMER WHERE DTS_CUSTOMER.USER_ID = ? LIMIT ? OFFSET ?";
@@ -64,7 +64,7 @@ public non-sealed class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public List<Customer> getCustomerByShop(String shopId, int limit, int offset) {
+    public List<Customer> getCustomerByShop(String shopId, int offset, int limit) {
         final String query = "SELECT DTS_CUSTOMER.CUSTOMER_ID, DTS_CUSTOMER.FIRST_NAME, DTS_CUSTOMER.MIDDLE_NAME, DTS_CUSTOMER.LAST_NAME, " +
                 "DTS_CUSTOMER.MOBILE_NO, DTS_CUSTOMER.EMAIL, DTS_CUSTOMER.CREATED_AT, DTS_CUSTOMER.UPDATED_AT, DTS_CUSTOMER.USER_ID, " +
                 "DTS_CUSTOMER.SHOP_ID FROM DTS_CUSTOMER DTS_CUSTOMER WHERE DTS_CUSTOMER.SHOP_ID = ? LIMIT ? OFFSET ?";
