@@ -37,10 +37,10 @@ class DressControllerTest {
         int limit = 10;
         Dress dress = new Dress();
         List<Dress> mockList = List.of(dress);
-        Mockito.when(dressService.getDressByUser(userId, limit, offset)).thenReturn(mockList);
+        Mockito.when(dressService.getDressByUser(userId, offset, limit)).thenReturn(mockList);
         ResponseEntity<List<Dress>> response = dressController.getDressByUser(userId, offset, limit);
         Assertions.assertEquals(200, response.getStatusCode().value());
-        Mockito.verify(dressService).getDressByUser(userId, limit, offset);
+        Mockito.verify(dressService).getDressByUser(userId, offset, limit);
     }
 
     @Test
@@ -48,12 +48,12 @@ class DressControllerTest {
         String userId = "user123";
         int offset = 0;
         int limit = 10;
-        Mockito.when(dressService.getDressByUser(userId, limit, offset)).thenReturn(List.of());
+        Mockito.when(dressService.getDressByUser(userId, offset, limit)).thenReturn(List.of());
         DtsException thrown = Assertions.assertThrows(DtsException.class, () ->
                 dressController.getDressByUser(userId, offset, limit)
         );
         Assertions.assertEquals(204, thrown.getResponse().getHttpStatus());
-        Mockito.verify(dressService).getDressByUser(userId, limit, offset);
+        Mockito.verify(dressService).getDressByUser(userId, offset, limit);
     }
 
     @Test
@@ -63,10 +63,10 @@ class DressControllerTest {
         int limit = 10;
         Dress dress = new Dress();
         List<Dress> mockList = List.of(dress);
-        Mockito.when(dressService.getDressByShop(userId, limit, offset)).thenReturn(mockList);
+        Mockito.when(dressService.getDressByShop(userId, offset, limit)).thenReturn(mockList);
         ResponseEntity<List<Dress>> response = dressController.getDressByShop(userId, offset, limit);
         Assertions.assertEquals(200, response.getStatusCode().value());
-        Mockito.verify(dressService).getDressByShop(userId, limit, offset);
+        Mockito.verify(dressService).getDressByShop(userId, offset, limit);
     }
 
     @Test
@@ -74,12 +74,12 @@ class DressControllerTest {
         String userId = "user123";
         int offset = 0;
         int limit = 10;
-        Mockito.when(dressService.getDressByShop(userId, limit, offset)).thenReturn(List.of());
+        Mockito.when(dressService.getDressByShop(userId, offset, limit)).thenReturn(List.of());
         DtsException thrown = Assertions.assertThrows(DtsException.class, () ->
                 dressController.getDressByShop(userId, offset, limit)
         );
         Assertions.assertEquals(204, thrown.getResponse().getHttpStatus());
-        Mockito.verify(dressService).getDressByShop(userId, limit, offset);
+        Mockito.verify(dressService).getDressByShop(userId, offset, limit);
     }
 
     @Test
@@ -89,10 +89,10 @@ class DressControllerTest {
         int limit = 10;
         Dress dress = new Dress();
         List<Dress> mockList = List.of(dress);
-        Mockito.when(dressService.getDressByCustomer(userId, limit, offset)).thenReturn(mockList);
+        Mockito.when(dressService.getDressByCustomer(userId, offset, limit)).thenReturn(mockList);
         ResponseEntity<List<Dress>> response = dressController.getDressByCustomer(userId, offset, limit);
         Assertions.assertEquals(200, response.getStatusCode().value());
-        Mockito.verify(dressService).getDressByCustomer(userId, limit, offset);
+        Mockito.verify(dressService).getDressByCustomer(userId, offset, limit);
     }
 
     @Test
@@ -100,12 +100,12 @@ class DressControllerTest {
         String userId = "user123";
         int offset = 0;
         int limit = 10;
-        Mockito.when(dressService.getDressByCustomer(userId, limit, offset)).thenReturn(List.of());
+        Mockito.when(dressService.getDressByCustomer(userId, offset, limit)).thenReturn(List.of());
         DtsException thrown = Assertions.assertThrows(DtsException.class, () ->
                 dressController.getDressByCustomer(userId, offset, limit)
         );
         Assertions.assertEquals(204, thrown.getResponse().getHttpStatus());
-        Mockito.verify(dressService).getDressByCustomer(userId, limit, offset);
+        Mockito.verify(dressService).getDressByCustomer(userId, offset, limit);
     }
 
     @Test

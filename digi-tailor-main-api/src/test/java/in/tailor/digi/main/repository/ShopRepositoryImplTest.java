@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -27,7 +28,7 @@ class ShopRepositoryImplTest {
 
     @Test
     void getShopByShopId_withAddress() {
-        Mockito.when(jdbcTemplate.query(
+        Mockito.when(jdbcTemplate.queryForObject(
                 Mockito.anyString(),
                 Mockito.any(RowMapper.class),
                 Mockito.anyString()
@@ -51,8 +52,7 @@ class ShopRepositoryImplTest {
             Mockito.when(rs.getString(DtsColumn.CITY)).thenReturn("c");
             Mockito.when(rs.getString(DtsColumn.STATE)).thenReturn("s");
             Mockito.when(rs.getString(DtsColumn.ZIPCODE)).thenReturn("zc");
-            Shop shop = shopRowMapper.mapRow(rs, 0);
-            return List.of(shop);
+            return shopRowMapper.mapRow(rs, 0);
         });
         var result = shopRepository.getShopByShopId("TEST_SHP_ID");
         Assertions.assertNotNull(result);
@@ -61,7 +61,7 @@ class ShopRepositoryImplTest {
 
     @Test
     void getShopByShopId_withoutAddress() {
-        Mockito.when(jdbcTemplate.query(
+        Mockito.when(jdbcTemplate.queryForObject(
                 Mockito.anyString(),
                 Mockito.any(RowMapper.class),
                 Mockito.anyString()
@@ -78,8 +78,7 @@ class ShopRepositoryImplTest {
             Mockito.when(rs.getObject(DtsColumn.OPEN_TIME, LocalTime.class)).thenReturn(LocalTime.now());
             Mockito.when(rs.getObject(DtsColumn.CLOSE_TIME, LocalTime.class)).thenReturn(LocalTime.now());
             Mockito.when(rs.getString(DtsColumn.HOLIDAY)).thenReturn("h");
-            Shop shop = shopRowMapper.mapRow(rs, 0);
-            return List.of(shop);
+            return shopRowMapper.mapRow(rs, 0);
         });
         var result = shopRepository.getShopByShopId("TEST_SHP_ID");
         Assertions.assertNotNull(result);
@@ -88,11 +87,11 @@ class ShopRepositoryImplTest {
 
     @Test
     void getShopByShopId_NotAvailable() {
-        Mockito.when(jdbcTemplate.query(
+        Mockito.when(jdbcTemplate.queryForObject(
                 Mockito.anyString(),
                 Mockito.any(RowMapper.class),
                 Mockito.anyString()
-        )).thenReturn(null);
+        )).thenThrow(new EmptyResultDataAccessException(0));
         var result = shopRepository.getShopByShopId("TEST_SHP_ID");
         Assertions.assertTrue(result.isEmpty());
     }

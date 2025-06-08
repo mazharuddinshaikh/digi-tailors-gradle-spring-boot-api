@@ -68,10 +68,10 @@ public class CustomerControllerTest {
         int limit = 10;
         Customer mockCustomer = new Customer(); // Assuming a default constructor
         List<Customer> mockList = List.of(mockCustomer);
-        Mockito.when(customerService.getCustomerByUser(userId, limit, offset)).thenReturn(mockList);
+        Mockito.when(customerService.getCustomerByUser(userId, offset, limit)).thenReturn(mockList);
         ResponseEntity<List<Customer>> response = customerController.getCustomerByUser(userId, offset, limit);
         Assertions.assertEquals(200, response.getStatusCode().value());
-        Mockito.verify(customerService).getCustomerByUser(userId, limit, offset);
+        Mockito.verify(customerService).getCustomerByUser(userId, offset, limit);
     }
 
     @Test
@@ -79,12 +79,12 @@ public class CustomerControllerTest {
         String userId = "user123";
         int offset = 0;
         int limit = 10;
-        Mockito.when(customerService.getCustomerByUser(userId, limit, offset)).thenReturn(List.of());
+        Mockito.when(customerService.getCustomerByUser(userId, offset, limit)).thenReturn(List.of());
         DtsException thrown = Assertions.assertThrows(DtsException.class, () ->
                 customerController.getCustomerByUser(userId, offset, limit)
         );
         Assertions.assertEquals(204, thrown.getResponse().getHttpStatus());
-        Mockito.verify(customerService).getCustomerByUser(userId, limit, offset);
+        Mockito.verify(customerService).getCustomerByUser(userId, offset, limit);
     }
 
     @Test
@@ -94,10 +94,10 @@ public class CustomerControllerTest {
         int limit = 10;
         Customer mockCustomer = new Customer(); // Assuming a default constructor
         List<Customer> mockList = List.of(mockCustomer);
-        Mockito.when(customerService.getCustomerByShop(shopId, limit, offset)).thenReturn(mockList);
+        Mockito.when(customerService.getCustomerByShop(shopId, offset, limit)).thenReturn(mockList);
         ResponseEntity<List<Customer>> response = customerController.getCustomerByShop(shopId, offset, limit);
         Assertions.assertEquals(200, response.getStatusCode().value());
-        Mockito.verify(customerService).getCustomerByShop(shopId, limit, offset);
+        Mockito.verify(customerService).getCustomerByShop(shopId, offset, limit);
     }
 
     @Test
@@ -105,12 +105,12 @@ public class CustomerControllerTest {
         String shopId = "user123";
         int offset = 0;
         int limit = 10;
-        Mockito.when(customerService.getCustomerByShop(shopId, limit, offset)).thenReturn(List.of());
+        Mockito.when(customerService.getCustomerByShop(shopId, offset, limit)).thenReturn(List.of());
         DtsException thrown = Assertions.assertThrows(DtsException.class, () ->
                 customerController.getCustomerByShop(shopId, offset, limit)
         );
         Assertions.assertEquals(204, thrown.getResponse().getHttpStatus());
-        Mockito.verify(customerService).getCustomerByShop(shopId, limit, offset);
+        Mockito.verify(customerService).getCustomerByShop(shopId, offset, limit);
     }
 
     @Test

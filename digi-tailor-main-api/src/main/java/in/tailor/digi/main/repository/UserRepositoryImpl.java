@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -87,18 +85,19 @@ public non-sealed class UserRepositoryImpl implements UserRepository {
     }
 
     private Optional<User> getUser(String key, String value) {
-        List<User> userList;
         String query = "SELECT DTS_USER.USER_ID  FROM DTS_USER DTS_USER ";
         if (key.equals("EMAIL")) {
             query += "WHERE DTS_USER.EMAIL = ?";
         } else {
             query += "WHERE DTS_USER.MOBILE_NO = ?";
         }
-        userList = jdbcTemplate.query(query, (rs, rowNum) ->
-                User.builder().userId(rs.getString(DtsColumn.USER_ID)).build(), value);
-        if (!CollectionUtils.isEmpty(userList)) {
-            return Optional.of(userList.get(0));
+        User user;
+        try {
+            user = jdbcTemplate.queryForObject(query, (rs, rowNum) ->
+                    User.builder().userId(rs.getString(DtsColumn.USER_ID)).build(), value);
+        } catch (EmptyResultDataAccessException ex) {
+            return Optional.empty();
         }
-        return Optional.empty();
+        return Optional.ofNullable(user);
     }
 }

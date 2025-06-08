@@ -7,6 +7,7 @@ import in.tailor.digi.model.table.DtsColumn;
 import in.tailor.digi.utils.DtsDateTimeUtil;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -33,28 +34,30 @@ public non-sealed class ShopRepositoryImpl implements ShopRepository {
                 "DTS_SHOP.CLOSE_TIME, DTS_SHOP.HOLIDAY, DTS_ADDRESS.ADDRESS_ID, DTS_ADDRESS.ADD_LINE_ONE, " +
                 "DTS_ADDRESS.ADD_LINE_TWO, DTS_ADDRESS.CITY, DTS_ADDRESS.STATE, DTS_ADDRESS.ZIPCODE FROM DTS_SHOP DTS_SHOP "
                 + "LEFT JOIN DTS_ADDRESS DTS_ADDRESS ON DTS_SHOP.ADDRESS_ID = DTS_ADDRESS.ADDRESS_ID WHERE DTS_SHOP.SHOP_ID = ?";
-        List<Shop> shopList = jdbcTemplate.query(query, (rs, rowNum) -> {
-            Shop.ShopBuilder shopBuilder = Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID))
-                    .shopName(rs.getString(DtsColumn.SHOP_NAME)).shopCode(rs.getString(DtsColumn.SHOP_CODE))
-                    .shopImage(rs.getString(DtsColumn.SHOP_IMAGE))
-                    .mobileNo(rs.getString(DtsColumn.MOBILE_NO))
-                    .alternateMobileNo(rs.getString(DtsColumn.ALTERNATE_MOBILE_NO))
-                    .shopStatus(rs.getString(DtsColumn.SHOP_STATUS))
-                    .openTime(rs.getObject(DtsColumn.OPEN_TIME, LocalTime.class))
-                    .closeTime(rs.getObject(DtsColumn.CLOSE_TIME, LocalTime.class))
-                    .holiday(rs.getString(DtsColumn.HOLIDAY));
-            if (Objects.nonNull(rs.getString(DtsColumn.ADDRESS_ID))) {
-                shopBuilder.shopAddress(Address.builder().addressId(rs.getString(DtsColumn.ADDRESS_ID)).addressLineOne(rs.getString(DtsColumn.ADDRESS_LINE_ONE))
-                        .addressLineTwo(rs.getString(DtsColumn.ADDRESS_LINE_TWO))
-                        .city(rs.getString(DtsColumn.CITY)).state(rs.getString(DtsColumn.STATE))
-                        .zipCode(rs.getString(DtsColumn.ZIPCODE)).build());
-            }
-            return shopBuilder.build();
-        }, shopId);
-        if (!CollectionUtils.isEmpty(shopList)) {
-            return Optional.ofNullable(shopList.get(0));
+        Shop shop;
+        try {
+            shop = jdbcTemplate.queryForObject(query, (rs, rowNum) -> {
+                Shop.ShopBuilder shopBuilder = Shop.builder().shopId(rs.getString(DtsColumn.SHOP_ID))
+                        .shopName(rs.getString(DtsColumn.SHOP_NAME)).shopCode(rs.getString(DtsColumn.SHOP_CODE))
+                        .shopImage(rs.getString(DtsColumn.SHOP_IMAGE))
+                        .mobileNo(rs.getString(DtsColumn.MOBILE_NO))
+                        .alternateMobileNo(rs.getString(DtsColumn.ALTERNATE_MOBILE_NO))
+                        .shopStatus(rs.getString(DtsColumn.SHOP_STATUS))
+                        .openTime(rs.getObject(DtsColumn.OPEN_TIME, LocalTime.class))
+                        .closeTime(rs.getObject(DtsColumn.CLOSE_TIME, LocalTime.class))
+                        .holiday(rs.getString(DtsColumn.HOLIDAY));
+                if (Objects.nonNull(rs.getString(DtsColumn.ADDRESS_ID))) {
+                    shopBuilder.shopAddress(Address.builder().addressId(rs.getString(DtsColumn.ADDRESS_ID)).addressLineOne(rs.getString(DtsColumn.ADDRESS_LINE_ONE))
+                            .addressLineTwo(rs.getString(DtsColumn.ADDRESS_LINE_TWO))
+                            .city(rs.getString(DtsColumn.CITY)).state(rs.getString(DtsColumn.STATE))
+                            .zipCode(rs.getString(DtsColumn.ZIPCODE)).build());
+                }
+                return shopBuilder.build();
+            }, shopId);
+        } catch (EmptyResultDataAccessException ex) {
+            return Optional.empty();
         }
-        return Optional.empty();
+        return Optional.ofNullable(shop);
     }
 
     @Override

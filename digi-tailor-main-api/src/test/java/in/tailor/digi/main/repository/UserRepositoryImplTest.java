@@ -16,7 +16,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 class UserRepositoryImplTest {
@@ -94,8 +93,35 @@ class UserRepositoryImplTest {
     }
 
     @Test
+    void isUserNameExist_whenResultSetReturnsZero() {
+        Mockito.when(jdbcTemplate.queryForObject(
+                Mockito.anyString(),
+                Mockito.any(RowMapper.class),
+                Mockito.anyString()
+        )).thenAnswer(answer -> {
+            RowMapper<Integer> countRowMapper = answer.getArgument(1);
+            ResultSet rs = Mockito.mock(ResultSet.class);
+            Mockito.when(rs.getInt("COUNT")).thenReturn(0);
+            return countRowMapper.mapRow(rs, 0);
+        });
+        var result = userRepositoryImpl.isUserNameExist("testUserName");
+        Assertions.assertFalse(result);
+    }
+
+    @Test
+    void isUserNameExist_WhenResultIsNull() {
+        Mockito.when(jdbcTemplate.queryForObject(
+                Mockito.anyString(),
+                Mockito.any(RowMapper.class),
+                Mockito.anyString()
+        )).thenReturn(null);
+        var result = userRepositoryImpl.isUserNameExist("testUserName");
+        Assertions.assertFalse(result);
+    }
+
+    @Test
     void isEmailExist_whenEmailAvailable() {
-        Mockito.when(jdbcTemplate.query(
+        Mockito.when(jdbcTemplate.queryForObject(
                 Mockito.anyString(),
                 Mockito.any(RowMapper.class),
                 Mockito.anyString()
@@ -103,7 +129,7 @@ class UserRepositoryImplTest {
             RowMapper<User> countRowMapper = answer.getArgument(1);
             ResultSet rs = Mockito.mock(ResultSet.class);
             Mockito.when(rs.getString(DtsColumn.USER_ID)).thenReturn("TST_USR_ID");
-            return List.of(countRowMapper.mapRow(rs, 0));
+            return countRowMapper.mapRow(rs, 0);
         });
         var result = userRepositoryImpl.isEmailExist("xyz@email.com");
         Assertions.assertTrue(result);
@@ -111,18 +137,18 @@ class UserRepositoryImplTest {
 
     @Test
     void isEmailExist_whenEmailNotAvailable() {
-        Mockito.when(jdbcTemplate.query(
+        Mockito.when(jdbcTemplate.queryForObject(
                 Mockito.anyString(),
                 Mockito.any(RowMapper.class),
                 Mockito.anyString()
-        )).thenReturn(null);
+        )).thenThrow(new EmptyResultDataAccessException(0));
         var result = userRepositoryImpl.isEmailExist("xyz@email.com");
         Assertions.assertFalse(result);
     }
 
     @Test
     void isMobileNoExist_whenAvailable() {
-        Mockito.when(jdbcTemplate.query(
+        Mockito.when(jdbcTemplate.queryForObject(
                 Mockito.anyString(),
                 Mockito.any(RowMapper.class),
                 Mockito.anyString()
@@ -130,7 +156,7 @@ class UserRepositoryImplTest {
             RowMapper<User> countRowMapper = answer.getArgument(1);
             ResultSet rs = Mockito.mock(ResultSet.class);
             Mockito.when(rs.getString(DtsColumn.USER_ID)).thenReturn("TST_USR_ID");
-            return List.of(countRowMapper.mapRow(rs, 0));
+            return countRowMapper.mapRow(rs, 0);
         });
         var result = userRepositoryImpl.isMobileNoExist("9999999999");
         Assertions.assertTrue(result);
@@ -138,11 +164,11 @@ class UserRepositoryImplTest {
 
     @Test
     void isMobileNoExist_whenNotAvailable() {
-        Mockito.when(jdbcTemplate.query(
+        Mockito.when(jdbcTemplate.queryForObject(
                 Mockito.anyString(),
                 Mockito.any(RowMapper.class),
                 Mockito.anyString()
-        )).thenReturn(null);
+        )).thenThrow(new EmptyResultDataAccessException(0));
         var result = userRepositoryImpl.isMobileNoExist("9999999999");
         Assertions.assertFalse(result);
     }
