@@ -1,7 +1,6 @@
 package in.tailor.digi.utils;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 public final class DtsCodeUtils {
 
@@ -31,6 +30,10 @@ public final class DtsCodeUtils {
 
     public static String generateShopId() {
         return "DTS_SHP_" + generateDateTimeCode();
+    }
+
+    public static String generateMeasurementId() {
+        return "DTS_M_" + generateDateTimeCode();
     }
 
     private static String generateDateTimeCode() {

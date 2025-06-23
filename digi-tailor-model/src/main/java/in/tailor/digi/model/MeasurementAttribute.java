@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -15,12 +14,12 @@ import java.time.LocalDateTime;
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @NoArgsConstructor
-public class Measurement {
-    private String measurementId;
-    private MeasurementAttribute measurementAttribute;
-    private MeasurementAttributeType measurementAttributeType;
-    private BigDecimal measurementValue;
-    private String measurementUnit;
+public class MeasurementAttribute {
+    private String attributeId;
+    private String attributeName;
+    private String attributeDescription;
+    private String attributeImage;
+    private DressType dressType;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

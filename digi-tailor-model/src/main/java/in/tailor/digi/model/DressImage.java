@@ -1,7 +1,6 @@
 package in.tailor.digi.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -19,15 +18,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @NoArgsConstructor
-public class Dress {
-	private String dressId;
+public class DressImage {
+	private int measurementId;
+	private Dress dress;
+	private String measurementImage;
+	private String rawDressImage;
+	private String patternImage;
+	private String seavedImage;
 	private String comment;
-	private User user;
-	private Shop shop;
-	private Customer customer;
-	private List<Measurement> measurementList;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdAt;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime updatedAt;
+
 }
